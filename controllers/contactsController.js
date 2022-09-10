@@ -11,7 +11,7 @@ const getContactById = async (req, res) => {
   const contact = await model.getContactById(contactId);
 
   if (!contact) {
-    return res.status(200).json({ message: 'Not contact found' });
+    return res.status(404).json({ message: 'Not found' });
   }
 
   res.status(200).json(contact);
@@ -31,7 +31,7 @@ const removeContact = async (req, res) => {
   if (isRemoved) {
     res.status(200).json({ message: 'contact deleted' });
   } else {
-    res.status(200).json({ message: 'Not contact found' });
+    res.status(404).json({ message: 'Not found' });
   }
 };
 
