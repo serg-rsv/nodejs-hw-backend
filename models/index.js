@@ -1,3 +1,3 @@
-const {Contact, schemas} = require('./contact');
+const { Contact, schemas } = require('./contact');
 
-module.export = { Contact, schemas };
+module.exports = { Contact, schemas };
