@@ -1,33 +1,32 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 
-const { handleSchemaValidationErrors } = require('../helpers');
-
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
 const phoneRegexp = /^\(\d{3}\) \d{3}-\d{4}$/;
 
-const contactSchema = new Schema({
-  name: {
-    type: String,
-    required: [true, 'Set name for contact'],
+const contactSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Set name for contact'],
+    },
+    email: {
+      type: String,
+      match: emailRegexp,
+      required: [true, 'Set email for contact'],
+    },
+    phone: {
+      type: String,
+      match: phoneRegexp,
+      required: [true, 'Set phone for contact'],
+    },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
   },
-  email: {
-    type: String,
-    match: emailRegexp,
-    required: [true, 'Set email for contact'],
-  },
-  phone: {
-    type: String,
-    match: phoneRegexp,
-    required: [true, 'Set phone for contact'],
-  },
-  favorite: {
-    type: Boolean,
-    default: false,
-  },
-});
-
-contactSchema.post('save', handleSchemaValidationErrors);
+  { versionKey: false, timestamps: true }
+);
 
 const Contact = model('contact', contactSchema);
 

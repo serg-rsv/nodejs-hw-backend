@@ -3,7 +3,7 @@ const { RequestError } = require('../helpers');
 
 const updateStatusContact = async (req, res) => {
   const { contactId } = req.params;
-  const { body } = req.body;
+  const { body } = req;
   const updatedContact = await Contact.findByIdAndUpdate(contactId, body, {
     new: true,
   });

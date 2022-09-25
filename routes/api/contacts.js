@@ -1,7 +1,8 @@
 const express = require('express');
 
 const { ctrlWrapper } = require('../../helpers');
-// const { addContactValidation } = require('../../validators/contactValidator');
+const { isValidId, contactValidator } = require('../../validators');
+const { schemas } = require('../../models');
 const {
   getContacts,
   getContactById,
@@ -14,12 +15,20 @@ const {
 const router = express.Router();
 
 router.get('/', ctrlWrapper(getContacts));
-router.get('/:contactId', ctrlWrapper(getContactById));
-router.post('/', ctrlWrapper(addContact));
-// router.post('/', addContactValidation, addContact);
-router.delete('/:contactId', ctrlWrapper(removeContact));
-router.put('/:contactId', ctrlWrapper(updateContact));
-// router.put('/:contactId', addContactValidation, updateContact);
-router.patch('/:contactId/favorite', ctrlWrapper(updateStatusContact));
+router.get('/:contactId', isValidId, ctrlWrapper(getContactById));
+router.post('/', contactValidator(schemas.addSchema), ctrlWrapper(addContact));
+router.delete('/:contactId', isValidId, ctrlWrapper(removeContact));
+router.put(
+  '/:contactId',
+  isValidId,
+  contactValidator(schemas.addSchema),
+  ctrlWrapper(updateContact)
+);
+router.patch(
+  '/:contactId/favorite',
+  isValidId,
+  contactValidator(schemas.updateFavoriteSchema),
+  ctrlWrapper(updateStatusContact)
+);
 
 module.exports = router;
