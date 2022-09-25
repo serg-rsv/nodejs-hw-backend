@@ -1,23 +1,25 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 
+const { handleSchemaValidationErrors } = require('../helpers');
+
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
-const phoneRegexp = /^(\d{3}) \d{3}-\d{4}$/;
+const phoneRegexp = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 const contactSchema = new Schema({
   name: {
     type: String,
-    require: [true, 'Set name for contact'],
+    required: [true, 'Set name for contact'],
   },
   email: {
     type: String,
     match: emailRegexp,
-    require: [true, 'Set email for contact'],
+    required: [true, 'Set email for contact'],
   },
   phone: {
     type: String,
     match: phoneRegexp,
-    require: [true, 'Set phone for contact'],
+    required: [true, 'Set phone for contact'],
   },
   favorite: {
     type: Boolean,
@@ -25,11 +27,13 @@ const contactSchema = new Schema({
   },
 });
 
+contactSchema.post('save', handleSchemaValidationErrors);
+
 const Contact = model('contact', contactSchema);
 
 const addSchema = Joi.object({
   name: Joi.string().required(),
-  emil: Joi.string().email().required(),
+  email: Joi.string().email().required(),
   phone: Joi.string().pattern(phoneRegexp).required(),
 });
 
