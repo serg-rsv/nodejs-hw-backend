@@ -1,24 +1,19 @@
-const Joi = require('joi');
+const { RequestError } = require('../helpers');
 
-module.exports = {
-  addContactValidation: (req, res, next) => {
-    const schema = Joi.object({
-      name: Joi.string().required(),
-      email: Joi.string().email().required(),
-      phone: Joi.string()
-        .length(10)
-        .pattern(/^[0-9]+$/)
-        .required(),
-    });
-
+const contactValidator = (schema) => {
+  const func = (req, _, next) => {
     const validationResult = schema.validate(req.body);
 
     if (validationResult.error) {
-      return res.status(400).json({
-        message: validationResult.error.details[0].message,
-      });
+      const error = RequestError(
+        400,
+        validationResult.error.details[0].message
+      );
+      next(error);
     }
-
     next();
-  },
+  };
+  return func;
 };
+
+module.exports = contactValidator;
