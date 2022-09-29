@@ -1,6 +1,6 @@
 const { RequestError } = require('../helpers');
 
-const contactValidator = (schema) => {
+const schemaJoiValidator = (schema) => {
   const func = (req, _, next) => {
     const validationResult = schema.validate(req.body);
 
@@ -16,4 +16,4 @@ const contactValidator = (schema) => {
   return func;
 };
 
-module.exports = contactValidator;
+module.exports = schemaJoiValidator;
