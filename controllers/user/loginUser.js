@@ -14,7 +14,7 @@ const loginUser = async (req, res) => {
     throw RequestError(401, 'Email or password is wrong');
   }
 
-  const token = jwt.sign({ _id: user._id }, SECRET_JWT);
+  const token = jwt.sign({ id: user._id }, SECRET_JWT);
 
   await User.findByIdAndUpdate(user._id, { token });
 
