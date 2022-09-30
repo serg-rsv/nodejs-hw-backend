@@ -3,7 +3,7 @@ const express = require('express');
 const { ctrlWrapper } = require('../../helpers');
 const { ctrlUser: ctrl } = require('../../controllers');
 const { schemasJoiUser } = require('../../models');
-const { schemaJoiValidator } = require('../../validators');
+const { auth, schemaJoiValidator } = require('../../validators');
 
 const router = express.Router();
 
@@ -18,5 +18,7 @@ router.post(
   schemaJoiValidator(schemasJoiUser.userSignupSchema),
   ctrlWrapper(ctrl.loginUser)
 );
+
+router.get('/logout',auth,ctrlWrapper(ctrl.logoutUser));
 
 module.exports = router;
