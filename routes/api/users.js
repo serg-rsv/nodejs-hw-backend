@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { ctrlWrapper } = require('../../helpers');
-const ctrl = require('../../controllers/user');
+const { ctrlUser: ctrl } = require('../../controllers');
 const { schemasJoiUser } = require('../../models');
 const { schemaJoiValidator } = require('../../validators');
 
