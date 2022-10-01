@@ -15,7 +15,7 @@ router.post(
 
 router.post(
   '/login',
-  schemaJoiValidator(schemasJoiUser.userSignupSchema),
+  schemaJoiValidator(schemasJoiUser.userLoginSchema),
   ctrlWrapper(ctrl.loginUser)
 );
 
@@ -23,6 +23,11 @@ router.get('/logout', auth, ctrlWrapper(ctrl.logoutUser));
 
 router.get('/current', auth, ctrlWrapper(ctrl.currentUser));
 
-// router.patch('/',auth,);
+router.patch(
+  '/',
+  auth,
+  schemaJoiValidator(schemasJoiUser.userUpdateSubscriptionSchema),
+  ctrlWrapper(ctrl.updateSubscription)
+);
 
 module.exports = router;
