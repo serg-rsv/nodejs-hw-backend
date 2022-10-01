@@ -1,10 +1,10 @@
 const { Contact } = require('../../models');
 
 const getContacts = async (req, res) => {
-  const { id } = req.user;
+  const { _id } = req.user;
   const { page = 1, limit = 10, favorite = false } = req.query;
   const skip = (page - 1) * limit;
-  const query = { owner: id };
+  const query = { owner: _id };
 
   if (favorite) {
     query.favorite = favorite;
