@@ -1,4 +1,7 @@
 const isValidId = require('./isValidId');
-const contactValidator = require('./contactValidator');
+const schemaJoiValidator = require('./schemaJoiValidator');
 
-module.exports = { isValidId, contactValidator };
+module.exports = {
+  isValidId,
+  schemaJoiValidator,
+};
