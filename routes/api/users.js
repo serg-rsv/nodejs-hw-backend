@@ -1,9 +1,10 @@
 const express = require('express');
 
+const { auth } = require('../../middlewares');
 const { ctrlWrapper } = require('../../helpers');
 const { ctrlUser: ctrl } = require('../../controllers');
 const { schemasJoiUser } = require('../../models');
-const { auth, schemaJoiValidator } = require('../../validators');
+const { schemaJoiValidator } = require('../../validators');
 
 const router = express.Router();
 
