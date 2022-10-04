@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const gravatar = require('gravatar');
 
 const { User } = require('../../models');
 const { RequestError } = require('../../helpers');
@@ -10,11 +11,17 @@ const signupUser = async (req, res) => {
     throw RequestError(409, 'Email in use');
   }
   const hashPassword = bcrypt.hashSync(password, 10);
-  const newUser = await User.create({ email, password: hashPassword });
+  const avatarURL = gravatar.url(email, { s: '100', r: 'x', d: 'mp' });
+  const newUser = await User.create({
+    email,
+    password: hashPassword,
+    avatarURL,
+  });
   res.status(201).json({
     user: {
       email: newUser.email,
       subscription: newUser.subscription,
+      avatarURL,
     },
   });
 };
