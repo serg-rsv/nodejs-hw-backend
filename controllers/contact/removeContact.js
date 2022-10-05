@@ -2,10 +2,8 @@ const { Contact } = require('../../models');
 const { RequestError } = require('../../helpers');
 
 const removeContact = async (req, res) => {
-  const { _id } = req.user;
   const { contactId } = req.params;
-  const isRemoved = await Contact.findOneAndRemove({
-    owner: _id,
+  const isRemoved = await Contact.findByIdAndDelete({
     _id: contactId,
   });
 
