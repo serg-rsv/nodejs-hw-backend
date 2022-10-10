@@ -14,6 +14,8 @@ router.post(
   ctrlWrapper(ctrl.signupUser)
 );
 
+router.get('verify/:verificationToken', ctrlWrapper(ctrl.verifyEmail));
+
 router.post(
   '/login',
   schemaJoiValidator(schemasJoiUser.userLoginSchema),
