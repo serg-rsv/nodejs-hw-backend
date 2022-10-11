@@ -14,7 +14,7 @@ const verifyEmail = async (req, res) => {
   }
 
   user.verify = true;
-  user.verificationToken = null;
+  // user.verificationToken = null; user model field is required
   await user.save();
 
   res.json({
