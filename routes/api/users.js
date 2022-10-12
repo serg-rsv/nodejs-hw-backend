@@ -14,6 +14,14 @@ router.post(
   ctrlWrapper(ctrl.signupUser)
 );
 
+router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verifyEmail));
+
+router.post(
+  '/verify',
+  schemaJoiValidator(schemasJoiUser.userEmailVerifySchema),
+  ctrlWrapper(ctrl.resendVerifyEmail)
+);
+
 router.post(
   '/login',
   schemaJoiValidator(schemasJoiUser.userLoginSchema),
@@ -37,4 +45,5 @@ router.patch(
   upload.single('avatar'),
   ctrlWrapper(ctrl.updateAvatarURL)
 );
+
 module.exports = router;
